@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name='iris_3d_lidar'>
+    <include>
+      <uri>model://iris_modified</uri>
+    </include>
+
+    <include>
+      <uri>model://vlp16</uri>
+    </include>
+    <joint name="lidar_joint" type="fixed">
+      <child>vlp16::base_link</child>
+      <parent>base_link</parent>
+    </joint>
+
+  </model>
+</sdf>

@@ -6,6 +6,7 @@ add_compile_options(-std=c++11)
 find_package(catkin REQUIRED COMPONENTS
     roscpp
     gazebo_ros
+    pcl_ros
     image_transport
     camera_info_manager
     sensor_msgs
@@ -43,15 +44,30 @@ include_directories(
     )
 link_directories(${GAZEBO_LIBRARY_DIRS})
 
+
+
 add_library(realsense_gazebo_plugin
-    src/RealSensePlugin.cpp
-    src/gazebo_ros_realsense.cpp
+    src/gazeboplugin/RealSensePlugin.cpp
+    src/gazeboplugin/gazebo_ros_realsense.cpp
     )
 
 target_link_libraries(realsense_gazebo_plugin
     ${catkin_LIBRARIES}
     ${GAZEBO_LIBRARIES})
 add_dependencies(realsense_gazebo_plugin
+    ${catkin_EXPORTED_TARGETS})
+
+
+add_library(gazebo_ros_velodyne_laser
+    src/gazeboplugin/GazeboRosVelodyneLaser.cpp
+    )
+
+target_link_libraries(gazebo_ros_velodyne_laser
+    ${catkin_LIBRARIES}
+    ${GAZEBO_LIBRARIES}
+    RayPlugin
+)
+add_dependencies(gazebo_ros_velodyne_laser
     ${catkin_EXPORTED_TARGETS})
 
 add_executable(keyboard_ctl
@@ -64,3 +80,5 @@ target_link_libraries(keyboard_ctl
     ${Sophus_LIBRARIES}
     ${CURSES_LIBRARIES}
     )
+add_executable(off_node src/off_node.cpp)
+target_link_libraries(off_node ${catkin_LIBRARIES})
