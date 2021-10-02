@@ -80,5 +80,4 @@ target_link_libraries(keyboard_ctl
     ${Sophus_LIBRARIES}
     ${CURSES_LIBRARIES}
     )
-add_executable(off_node src/off_node.cpp)
-target_link_libraries(off_node ${catkin_LIBRARIES})
+
